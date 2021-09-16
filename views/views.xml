@@ -1,0 +1,54 @@
+<odoo>
+  <data>
+    <!-- Héritage de la vue liste -->
+    <record id="view_product_tree_inherit" model="ir.ui.view">
+        <field name="name">product.template.product.tree.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name='qualite'/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- héritage de la vue formulaire -->
+    <record id="view_product_form_inherit" model="ir.ui.view">
+        <field name="name">product.template.product.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name='qualite'/>
+                <field name='recolte'/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- vue recherche: filtre par différents états -->
+    <record id="view_product_search_inherit" model="ir.ui.view">
+       <field name="name">product.template.product.search.inherit</field>
+       <field name="model">product.template</field>
+        <field name="arch" type="xml">
+             <search>
+                <field name="qualite" string="Etat du fruit" domain="['|','|',('qualite','=','frais'),
+                ('qualite','=','recent'), ('qualite','=','fletri') ]"/>
+             </search>
+       </field>
+    </record>
+
+
+    <!-- action donnant les vues sur notre modèle -->
+    <record model="ir.actions.act_window" id="gestion_gic.action_window">
+      <field name="name">Gestion Gic</field>
+      <field name="res_model">product.template</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu de notre module -->
+    <menuitem name="gestion_gic" id="gestion_gic.menu_root" action="gestion_gic.action_window"/>
+  </data>
+</odoo>
